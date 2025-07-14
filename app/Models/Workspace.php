@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany; 
+use App\Models\User;
+use App\Models\Task;
 
 
 class Workspace extends Authenticatable {
@@ -16,4 +20,20 @@ class Workspace extends Authenticatable {
         'description',
         'owner_id',
     ];
+    protected $hidden = [
+        'remember_token',
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+    public function owner() {
+        return $this->belongsTo(User::class, 'owner_id');
+    }
+
+    public function tasks() {
+        return $this->hasMany(Task::class);
+    }
 }

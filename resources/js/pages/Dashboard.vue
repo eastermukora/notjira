@@ -2,35 +2,48 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
-import PlaceholderPattern from '../components/PlaceholderPattern.vue';
+import { ref, defineProps, reactive } from 'vue';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Dashboard',
-        href: '/dashboard',
-    },
-];
+defineProps({
+    workspaces: Array, // Workspaces data passed from the controller
+});
+
+const createWorkspace = () => {
+    console.log('Create Workspace button clicked');
+    // Add logic for creating a new workspace (e.g., open a modal or redirect to a form)
+};
 </script>
 
 <template>
     <Head title="Dashboard" />
 
-    <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 overflow-x-auto">
-            <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-                <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern />
-                </div>
-                <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern />
-                </div>
-                <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern />
-                </div>
+    <div class="p-6 space-y-6">
+        <!-- Workspaces Section -->
+        <div class="space-y-4">
+            <h1 class="text-2xl font-bold">Workspaces</h1>
+            <div v-if="workspaces.length === 0" class="text-gray-500">
+                No workspaces available. Click the button below to create one.
             </div>
-            <div class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                <PlaceholderPattern />
+            <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div
+                    v-for="workspace in workspaces"
+                    :key="workspace.id"
+                    class="p-4 bg-white shadow rounded-lg"
+                >
+                    <h2 class="text-lg font-bold">{{ workspace.name }}</h2>
+                    <p class="text-gray-600">{{ workspace.description }}</p>
+                    <p class="text-sm text-gray-500">Owner: {{ workspace.owner.name }}</p>
+                </div>
             </div>
         </div>
-    </AppLayout>
+        
+        <div class="flex justify-center mt-6">
+            <button
+                @click="createWorkspace"
+                class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+                Create Workspace
+            </button>
+        </div>
+    </div>
 </template>
