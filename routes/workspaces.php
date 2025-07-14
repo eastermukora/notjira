@@ -39,28 +39,28 @@ Route::middleware('auth')->group(function () {
         return "todo";
     });
 
-    // create a ticket
-    Route::post("/workspaces/{workspace_id}/tickets", function () {
+    // create a task
+    Route::post("/workspaces/{workspace_id}/tasks", function () {
         return "todo";
     });
 
-    // show tickets
-    Route::get("/workspaces/{workspace_id}/tickets", function () {
+    // show tasks
+    Route::get("/workspaces/{workspace_id}/tasks", function () {
         return "todo";
     });
 
-    // show a ticket
-    Route::get("/workspaces/{workspace_id}/tickets/{ticket_id}", function () {
+    // show a task
+    Route::get("/workspaces/{workspace_id}/tasks/{task_id}", function () {
         return "todo";
     });
 
-    // update a ticket
-    Route::put("/workspaces/{workspace_id}/tickets/{ticket_id}", function () {
+    // update a task
+    Route::put("/workspaces/{workspace_id}/tasks/{task_id}", function () {
         return "todo";
     });
 
-    // delete a ticket
-    Route::delete("/workspaces/{workspace_id}/tickets/{ticket_id}", function () {
+    // delete a task
+    Route::delete("/workspaces/{workspace_id}/tasks/{task_id}", function () {
         return "todo";
     });
 });
