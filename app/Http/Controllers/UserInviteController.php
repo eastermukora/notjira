@@ -1,24 +1,15 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\WorkspaceInvite;
+use App\Models\Workspace;
 use Illuminate\Http\Request;
+use App\Mail\WorkspaceInviteMail;
+use Illuminate\Support\Facades\Mail;
 
 class UserInviteController extends Controller
 {
-    public function index(Request $request)
-    {
-        // Fetch invites for the authenticated user
-        $userEmail = $request->user()->email; // Get the authenticated user's email
-        $invites = WorkspaceInvite::where('email', $userEmail)->get();
-
-        // Return the invites as JSON
-        return response()->json([
-            'invites' => $invites,
-        ]);
-    }
-};
-
     public function store(Request $request)
     {
         // Validate the request
@@ -27,15 +18,26 @@ class UserInviteController extends Controller
             'email' => 'required|email',
         ]);
 
-        // Create a new workspace invite
-        $invite = WorkspaceInvite::create([
+        // Create the invite
+        $workspaceInvite = WorkspaceInvite::create([
             'workspace_id' => $request->workspace_id,
             'email' => $request->email,
         ]);
 
-        // Return the created invite as JSON
-        return response()->json([
-            'invite' => $invite,
-        ], 201);
+        // Fetch workspace details
+        $workspace = Workspace::find($request->workspace_id);
+
+        // Send the email
+        Mail::to($request->email)->send(new WorkspaceInviteMail($workspace->name, $request->email));
+
+        return response()->json(['message' => 'Invite sent successfully!']);
+    }
+
+    public function index()
+    {
+        // Fetch all invites for the authenticated user
+        $invites = WorkspaceInvite::where('email', auth()->user()->email)->get();
+
+        return response()->json(['invites' => $invites]);
     }
 }

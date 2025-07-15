@@ -26,7 +26,6 @@ class WorkspaceInviteFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
         ];
     }
-}
 
     /**
      * Indicate that the invite is for a specific workspace.
@@ -37,12 +36,11 @@ class WorkspaceInviteFactory extends Factory
     public function forWorkspace(int $workspaceId): static
     {
         return $this->state([
-            'workspace_id' => $workspaceId, 
+            'workspace_id' => $workspaceId,
             // Use the provided workspace ID
             'email' => fake()->unique()->safeEmail(),
         ]);
     }
-}
 
     /**
      * Indicate that the invite is for a specific email.
