@@ -60,12 +60,15 @@ onMounted(async () => {
                             </h2>
                             <p class="text-gray-600">{{ task.description }}</p>
                             <p class="text-sm text-gray-500">Owner: {{ task.owner_id }}</p>
-                            <UpdateTaskButton :task="task" />
-                            <AssignUserButton
-                                :task="task"
-                                :workspace_id="workspaceStore.currentWorkspace.id"
-                                :memebers="workspaceStore.currentWorkspace.invites.map((invite) => invite.email)"
-                            />
+
+                            <div class="flex gap-2">
+                                <UpdateTaskButton :task="task" />
+                                <AssignUserButton
+                                    :task="task"
+                                    :workspace_id="workspaceStore.currentWorkspace.id"
+                                    :memebers="workspaceStore.currentWorkspace.invites.map((invite) => invite.email)"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

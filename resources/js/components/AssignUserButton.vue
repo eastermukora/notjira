@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Label } from '@/components/ui/label';
 import { TaskType, useWorkspacesStore } from '@/layouts/store/workspaces';
 import { ref } from 'vue';
 import { Dialog, DialogContent, DialogOverlay, DialogTrigger } from '../components/ui/dialog';
@@ -13,7 +14,7 @@ const workspacesStore = useWorkspacesStore();
 const open = ref(false);
 
 const form = ref({
-    email: '',
+    email: props.task.assignee_email ?? '',
 });
 
 const assignTask = () => {
@@ -44,6 +45,10 @@ const assignTask = () => {
         <DialogOverlay />
 
         <DialogContent>
+            <h1 class="text-lg font-bold">{{ props.task.title }}</h1>
+
+            <Label> Assigned to </Label>
+
             <select class="rounded-md border p-2" v-model="form.email">
                 <option v-for="member in memebers" :key="member" :value="member">{{ member }}</option>
             </select>

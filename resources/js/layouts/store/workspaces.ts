@@ -9,7 +9,7 @@ export type TaskType = {
     workspace_id: string;
     deadline: string;
     status: string;
-    assignee_id: string;
+    assignee_email: string;
 };
 export type InviteUserType = {
     workspace_id: string;
