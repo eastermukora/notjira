@@ -50,16 +50,21 @@ onMounted(async () => {
                 <!-- Tasks -->
                 <div class="flex flex-col gap-4 p-2">
                     <h1 class="text-xl font-bold">Tasks</h1>
-                    <div v-if="workspaceStore.currentWorkspace.tasks?.length > 0" class="space-y-4">
-                        <div v-for="task in workspaceStore.currentWorkspace.tasks" :key="task.id">
-                            <h2 class="text-lg font-bold">
+                    <div v-if="workspaceStore.currentWorkspace.tasks?.length > 0" class="flex flex-col gap-8 space-y-4">
+                        <div v-for="task in workspaceStore.currentWorkspace.tasks" :key="task.id" class="flex flex-col gap-2">
+                            <h2 class="flex gap-4 text-lg font-bold">
                                 <!-- Link to Task Details Page -->
                                 <a :href="`/workspaces/${workspaceStore.currentWorkspace.id}/tasks/${task.id}`" class="text-blue-500 hover:underline">
-                                    {{ task.title }}
+                                    #{{ task.id }}: {{ task.title }}
                                 </a>
+                                <!-- Task status: -->
+                                <div class="w-fit rounded-full border border-green-800 bg-green-200 px-1">
+                                    <span class="text-sm">{{ task.status }}</span>
+                                </div>
                             </h2>
                             <p class="text-gray-600">{{ task.description }}</p>
-                            <p class="text-sm text-gray-500">Owner: {{ task.owner_id }}</p>
+
+                            <p class="text-xs text-gray-500">Owner: {{ task.assignee_email ?? 'unassigned' }}</p>
 
                             <div class="flex gap-2">
                                 <UpdateTaskButton :task="task" />
