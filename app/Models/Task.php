@@ -18,5 +18,22 @@ class Task extends Model
         'workspace_id',
         "deadline",
         "status",
+        "assignee"
     ];
+
+
+    protected $casts = [
+        'deadline' => 'datetime',
+    ];
+
+    // Relationships
+    public function workspace()
+    {
+        return $this->belongsTo(Workspace::class);
+    }
+
+    public function assignee()
+    {
+        return $this->belongsTo(User::class, "assignee");
+    }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Workspace;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WorkspacesController extends Controller
 {
@@ -11,7 +13,8 @@ class WorkspacesController extends Controller
      */
     public function index()
     {
-        //
+        $workspaces = Workspace::all();
+        return response()->json($workspaces);
     }
 
     /**
@@ -22,12 +25,24 @@ class WorkspacesController extends Controller
         //
     }
 
-    /**
+    /** e
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+        ]);
+        $ownerId = Auth::user()->id;
+        $workspace = Workspace::create([
+            'name' => $request->name,
+            'description' => $request->description ?? "",
+            'owner_id' => $ownerId,
+            "created_at" => time(),
+            "updated_at" => time(),
+        ]);
+
+        return response()->json($workspace, 201);
     }
 
     /**

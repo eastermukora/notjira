@@ -1,21 +1,14 @@
 <?php
 
-use App\Http\Controllers\WorkspaceController;
-
-
+use App\Http\Controllers\WorkspacesController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::middleware('auth')->group(function () {
     // list all workspaces
-    Route::get("/workspaces", function () {
-        return "todo";
-    });
+    Route::get("/workspaces", [WorkspacesController::class, "index"]);
 
     // create a new workspace
-    Route::post("/workspaces", function () {
-        return "todo";
-    });
+    Route::post("/workspaces", [WorkspacesController::class, "store"]);
 
     // show a workspace
     Route::get("/workspaces/{workspace_id}", function () {

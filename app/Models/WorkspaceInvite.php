@@ -16,4 +16,14 @@ class WorkspaceInvite extends Authenticatable
         'workspace_id',
         'email',
     ];
+
+    // Relationships
+    public function workspace()
+    {
+        return $this->belongsTo(Workspace::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, "email");
+    }
 }
