@@ -50,9 +50,9 @@ class WorkspacesController extends Controller
      */
     public function show(string $workspace_id)
     {
-        $request = Workspace::find($workspace_id);
-        $request->load('owner', 'tasks', "invites");
-        return response()->json($request);
+        $workspace = Workspace::find($workspace_id);
+        $workspace->load('owner', 'tasks', "invites");
+        return response()->json($workspace);
     }
 
     /**

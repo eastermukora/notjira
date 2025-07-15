@@ -19,16 +19,17 @@ class TasksController extends Controller
     /**
      * Return a single task.
      */
-    public function show(Task $task)
+    public function show(string $task_id)
     {
-        return view('tasks.show', compact('task'));
+        $task = Task::find($task_id);
+        return response()->json($task);
     }
 
 
     /**
      * Store a newly created resource in storage.
      */
-    public function create(Request $request)
+    public function store(Request $request)
     {
 
         try {
@@ -47,7 +48,7 @@ class TasksController extends Controller
             // return task
             return response()->json(['message' => 'Task created successfully.', 'data' => $task]);
         } catch (\Exception $e) {
-            return redirect()->route('tasks.index')->with('error', 'Task could not be created.');
+            return response()->json(['message' => 'Task could not be created.', 'data' => $e->getMessage()], 400);
         }
     }
 

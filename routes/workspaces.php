@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TasksController;
 use App\Http\Controllers\WorkspacesController;
 use App\Models\Workspace;
 use Illuminate\Support\Facades\Route;
@@ -45,9 +46,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // create a task
-    Route::post("/api/workspaces/{workspace_id}/tasks", function () {
-        return "todo";
-    });
+    Route::post("/api/workspaces/{workspace_id}/tasks", [TasksController::class, "store"]);
 
     // show tasks
     Route::get("/api/workspaces/{workspace_id}/tasks", function () {

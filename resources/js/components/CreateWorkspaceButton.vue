@@ -17,12 +17,13 @@ const createWorkspace = async () => {
         })
         .catch((err) => {
             console.log(err);
+            open.value = true;
         });
 };
 </script>
 
 <template>
-    <Dialog v-model="open">
+    <Dialog v-model:open="open">
         <DialogTrigger as-child>
             <button class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">Create Workspace</button>
         </DialogTrigger>
