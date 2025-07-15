@@ -1,62 +1,71 @@
 <?php
 
 use App\Http\Controllers\WorkspacesController;
+use App\Models\Workspace;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::middleware('auth')->group(function () {
     // list all workspaces
-    Route::get("/workspaces", [WorkspacesController::class, "index"]);
+    Route::get("/api/workspaces", [WorkspacesController::class, "index"]);
 
     // create a new workspace
-    Route::post("/workspaces", [WorkspacesController::class, "store"]);
+    Route::post("/api/workspaces", [WorkspacesController::class, "store"]);
+
+
+    // show the workspace details page
+    Route::get(
+        "/workspaces/{workspace_id}",
+        function (string $workspace_id) {
+            return Inertia::render('WorkspaceDetails', ["workspace_id" => $workspace_id]);
+        }
+    )->middleware(['auth', 'verified'])->name('workspaces.show');
 
     // show a workspace
-    Route::get("/workspaces/{workspace_id}", function () {
-        return "todo";
-    });
+    Route::get("/api/workspaces/{workspace_id}", [WorkspacesController::class, "show"]);
 
     // update a workspace
-    Route::put("/workspaces/{workspace_id}", function () {
+    Route::put("/api/workspaces/{workspace_id}", function () {
         return "todo";
     });
 
     // delete a workspace
-    Route::delete("/workspaces/{workspace_id}", function () {
+    Route::delete("/api/workspaces/{workspace_id}", function () {
         return "todo";
     });
 
     // create a workspace invite
-    Route::post("/workspaces/{workspace_id}/invites", function () {
+    Route::post("/api/workspaces/{workspace_id}/invites", function () {
         return "todo";
     });
 
     // show workspace invites
-    Route::get("/workspaces/{workspace_id}/invites", function () {
+    Route::get("/api/workspaces/{workspace_id}/invites", function () {
         return "todo";
     });
 
     // create a task
-    Route::post("/workspaces/{workspace_id}/tasks", function () {
+    Route::post("/api/workspaces/{workspace_id}/tasks", function () {
         return "todo";
     });
 
     // show tasks
-    Route::get("/workspaces/{workspace_id}/tasks", function () {
+    Route::get("/api/workspaces/{workspace_id}/tasks", function () {
         return "todo";
     });
 
     // show a task
-    Route::get("/workspaces/{workspace_id}/tasks/{task_id}", function () {
+    Route::get("/api/workspaces/{workspace_id}/tasks/{task_id}", function () {
         return "todo";
     });
 
     // update a task
-    Route::put("/workspaces/{workspace_id}/tasks/{task_id}", function () {
+    Route::put("/api/workspaces/{workspace_id}/tasks/{task_id}", function () {
         return "todo";
     });
 
     // delete a task
-    Route::delete("/workspaces/{workspace_id}/tasks/{task_id}", function () {
+    Route::delete("/api/workspaces/{workspace_id}/tasks/{task_id}", function () {
         return "todo";
     });
 });

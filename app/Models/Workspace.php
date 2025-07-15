@@ -36,16 +36,12 @@ class Workspace extends Authenticatable
 
     public function tasks()
     {
-        return $this->hasMany(Task::class);
+        return $this->hasMany(Task::class, "workspace_id");
     }
 
 
-    public function members()
-    {
-        return $this->belongsTo(User::class, "workspace_members")->withPivot("role");
-    }
     public function invites()
     {
-        return $this->hasMany(WorkspaceInvite::class);
+        return $this->hasMany(WorkspaceInvite::class, "workspace_id");
     }
 }

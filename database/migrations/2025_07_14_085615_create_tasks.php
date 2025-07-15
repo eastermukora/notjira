@@ -18,7 +18,10 @@ return new class extends Migration
             $table->integer('workspace_id');
             $table->integer('deadline');
             $table->integer('status');
+            $table->string('assignee_id')->nullable();
             $table->timestamps();
+            $table->foreign('workspace_id')->references('id')->on('workspaces');
+            $table->foreign('assignee_id')->references('id')->on('users');
         });
     }
 

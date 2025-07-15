@@ -1,36 +1,27 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
-import { useRoute } from 'vue-router';
+import { useWorkspacesStore, type WorkspaceType } from '@/layouts/store/workspaces';
+import { defineProps, onMounted, ref } from 'vue';
 
-const route = useRoute(); // Get the workspace ID from the route
-const workspace = ref(null); // Reactive variable to store workspace details
+const props = defineProps<{
+    workspace_id: string;
+}>();
 
-// Fetch workspace details from the backend
-const fetchWorkspaceDetails = async () => {
-    try {
-        const response = await axios.get(`/workspaces/${route.params.id}`);
-        workspace.value = response.data.workspace;
-    } catch (error) {
-        console.error('Error fetching workspace details:', error);
-    }
-};
+const workspace = ref(null as WorkspaceType | null);
+const workspaceStore = useWorkspacesStore();
 
 // Fetch data when the component is mounted
-onMounted(() => {
-    fetchWorkspaceDetails();
+onMounted(async () => {
+    workspace.value = await workspaceStore.fetchWorkspace(props.workspace_id);
 });
 </script>
 
 <template>
-    <div class="p-6 space-y-6">
-        <div v-if="!workspace" class="text-gray-500">
-            Loading workspace details...
-        </div>
-        <div v-else class="bg-white shadow rounded-lg p-4">
+    <div class="space-y-6 p-6">
+        <div v-if="!workspace" class="text-gray-500">Loading workspace details...</div>
+        <div v-else class="rounded-lg bg-white p-4 shadow">
             <h1 class="text-2xl font-bold">{{ workspace.name }}</h1>
             <p class="text-gray-600">{{ workspace.description }}</p>
-            <p class="text-sm text-gray-500">Owner: {{ workspace.owner.name }}</p>
+            <p class="text-sm text-gray-500">Owner: {{ workspace.owner_id }}</p>
         </div>
     </div>
 </template>

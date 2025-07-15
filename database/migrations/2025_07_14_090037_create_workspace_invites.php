@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('workspace_id');
             $table->string('email');
             $table->timestamps();
+            $table->foreign('workspace_id')->references('id')->on('workspaces')->onDelete('cascade');
         });
     }
 

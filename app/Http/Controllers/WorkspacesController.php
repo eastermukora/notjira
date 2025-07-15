@@ -48,9 +48,11 @@ class WorkspacesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $workspace_id)
     {
-        //
+        $request = Workspace::find($workspace_id);
+        $request->load('owner', 'tasks', "invites");
+        return response()->json($request);
     }
 
     /**
