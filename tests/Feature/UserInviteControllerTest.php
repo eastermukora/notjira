@@ -23,6 +23,11 @@ class UserInviteControllerTest extends TestCase
             'email' => 'invitee@example.com',
         ]);
 
+        WorkspaceInvite::factory()->create([
+            'workspace_id' => Workspace::factory()->create()->id,
+            'email' => 'invitee2@example.com',
+        ]);
+
         // Act as the user and make the API request
         $response = $this->actingAs($user, 'sanctum')->get('/api/user/invites');
 

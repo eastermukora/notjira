@@ -37,8 +37,8 @@ class WorkspaceInviteFactory extends Factory
     public function forWorkspace(int $workspaceId): static
     {
         return $this->state([
-            'workspace_id' => Workspace::factory()->create()->id, 
-            // Create a workspace and use its ID
+            'workspace_id' => $workspaceId, 
+            // Use the provided workspace ID
             'email' => fake()->unique()->safeEmail(),
         ]);
     }

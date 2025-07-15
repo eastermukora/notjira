@@ -1,8 +1,5 @@
 <?php
 
-use App\Http\Controllers\WorkspaceController;
-
-
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
