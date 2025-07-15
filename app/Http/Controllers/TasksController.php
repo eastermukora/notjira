@@ -76,4 +76,29 @@ class TasksController extends Controller
         $task->delete();
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
     }
+
+    // Assign a task to a user
+    public function assign(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+            "task_id" => "required",
+        ]);
+
+        $task = Task::find($request->task_id);
+
+        if (!$task) {
+            return response()->json(['message' => 'Task not found.'], 404);
+        }
+
+        if ($task->assignee_id) {
+            return response()->json(['message' => 'Task already assigned.'], 400);
+        }
+
+        $task->assignee_email = $request->email;
+        $task->save();
+
+
+        return response()->json(['message' => 'Task assigned successfully.', 'data' => $task]);
+    }
 }

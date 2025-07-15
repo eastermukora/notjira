@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Workspace;
 use Illuminate\Http\Request;
 
 
@@ -18,9 +19,29 @@ class WorkspaceInvitesController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $request->validate([
+            'workspace_id' => 'required',
+            'email' => 'required|email',
+        ]);
+
+        $workspace = Workspace::find($request->workspace_id);
+
+        if (!$workspace) {
+            return response()->json(['message' => 'Workspace not found.'], 404);
+        }
+
+        if ($workspace->invites()->where('email', $request->email)->exists()) {
+            return response()->json(['message' => 'User already invited.'], 400);
+        }
+
+        $workspace->invites()->create([
+            'email' => $request->email,
+        ]);
+
+
+        return response()->json(['message' => 'Invite created successfully.', 'data' => $workspace]);
     }
 
     /**

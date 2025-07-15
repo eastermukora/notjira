@@ -11,6 +11,10 @@ export type TaskType = {
     status: string;
     assignee_id: string;
 };
+export type InviteUserType = {
+    workspace_id: string;
+    email: string;
+};
 
 export const useWorkspacesStore = defineStore('workspaces', {
     state: () => ({
@@ -59,6 +63,29 @@ export const useWorkspacesStore = defineStore('workspaces', {
                 this.fetchWorkspace(form.workspace_id);
             } catch (error) {
                 console.error('Error updating task:', error);
+            }
+        },
+        async inviteUser(form: InviteUserType) {
+            try {
+                await axios.post(`/api/workspaces/${form.workspace_id}/invites`, {
+                    ...form,
+                });
+                // update store data
+                this.fetchWorkspace(form.workspace_id);
+            } catch (error) {
+                console.error('Error inviting user:', error);
+            }
+        },
+
+        async assignTask(form: { email: string; task_id: string; workspace_id: string }) {
+            try {
+                await axios.post(`/api/workspaces/${form.workspace_id}/tasks/${form.task_id}/assign`, {
+                    ...form,
+                });
+                // update store data
+                this.fetchWorkspace(form.workspace_id);
+            } catch (error) {
+                console.error('Error assigning task:', error);
             }
         },
     },
