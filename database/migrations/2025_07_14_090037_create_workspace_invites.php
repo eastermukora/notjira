@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('workspace_invites', function (Blueprint $table) {
             $table->id();
-            $table->string('workspace_id');
+            $table->foreignId('workspace_id')->constrained()->onDelete('cascade');
             $table->string('email');
             $table->timestamps();
         });
